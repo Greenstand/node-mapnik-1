@@ -1,3 +1,10 @@
+## [4.19.1](https://github.com/Greenstand/node-mapnik-1/compare/v4.19.0...v4.19.1) (2021-05-19)
+
+
+### Bug Fixes
+
+* change expire time to 60s ([9aad672](https://github.com/Greenstand/node-mapnik-1/commit/9aad6722ac940128a74d92a6959f6f975227ec69))
+
 # [4.19.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.18.2...v4.19.0) (2021-05-17)
 
 
