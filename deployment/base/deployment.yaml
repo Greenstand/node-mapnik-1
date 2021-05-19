@@ -27,7 +27,7 @@ spec:
             - name: CACHE_SIZE
               value: "10000"
             - name: CACHE_EXPIRE
-              value: "240000"
+              value: "60"
             - name: NODE_TLS_REJECT_UNAUTHORIZED
               value: "0"
             - name: DB_URL
