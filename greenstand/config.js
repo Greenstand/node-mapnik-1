@@ -6,6 +6,7 @@ const log = require("loglevel");
 const PGPool = require("./PGPool");
 
 
+const ZOOM_LEVEL_THRETHOLD_OF_CLUSTER = 15;
 
 /*
  * setup the DB connection
@@ -120,6 +121,10 @@ class Config {
       map_name //map_name use geojson
     ) ? true: false;
     function checkUseBounds(){
+      if(zoomLevelInt > ZOOM_LEVEL_THRETHOLD_OF_CLUSTER){
+        log.warn("zoom level for trees should use bounds anyway");
+        return true;
+      }
       if(map_name){
         log.warn("org map always use global data set");
         return false;
@@ -176,7 +181,11 @@ class Config {
         const resultHandled = xmlJsonTemplate.replace("json_data", json);
         return resultHandled;
       });
-      log.warn("xml length:", result.length);
+      log.info("xml length:", result.length);
+      if(result.length > 1024*1024*5){
+        log.warn("the geojons is kind of too big!");
+        throw new Error("The data is too big");
+      }
       log.debug("xml:", result);
     }else{
       const xmlTemplate = zoomLevelInt > 15?
