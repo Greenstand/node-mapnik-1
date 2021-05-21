@@ -1,3 +1,10 @@
+## [4.19.4](https://github.com/Greenstand/node-mapnik-1/compare/v4.19.3...v4.19.4) (2021-05-21)
+
+
+### Bug Fixes
+
+* do not use bound for tree points in map_name case ([b634779](https://github.com/Greenstand/node-mapnik-1/commit/b634779046a219d4b55f82b94ec95115b304acaf))
+
 ## [4.19.3](https://github.com/Greenstand/node-mapnik-1/compare/v4.19.2...v4.19.3) (2021-05-21)
 
 
