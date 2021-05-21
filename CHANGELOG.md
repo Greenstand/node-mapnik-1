@@ -1,3 +1,10 @@
+## [4.19.3](https://github.com/Greenstand/node-mapnik-1/compare/v4.19.2...v4.19.3) (2021-05-21)
+
+
+### Bug Fixes
+
+* tree point order problem that would lead to point of trees get cut on the image ([941a5cc](https://github.com/Greenstand/node-mapnik-1/commit/941a5ccd90e309d79e0583107ee3ce4acc5faa24))
+
 ## [4.19.2](https://github.com/Greenstand/node-mapnik-1/compare/v4.19.1...v4.19.2) (2021-05-19)
 
 
