@@ -141,6 +141,7 @@ class SQLCase2{
       ${this.getBoundingBoxQuery()}
       ${this.getFilter()}
       ${this.getJoinCriteria()}
+      ORDER BY ID DESC
     ` 
     ;
     console.log(sql);
