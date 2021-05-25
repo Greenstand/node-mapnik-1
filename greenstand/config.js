@@ -117,8 +117,9 @@ class Config {
     } = options;
     const zoomLevelInt = parseInt(zoomLevel);
     const useGeoJson = (
-      (zoomLevelInt >= 1 && zoomLevelInt <= 23) ||
-      map_name //map_name use geojson
+      //just tree level don't use geojson, cuz it's possible the tree points
+      //are too many, making the geojson too big
+      zoomLevelInt >= 1 && zoomLevelInt <= ZOOM_LEVEL_THRETHOLD_OF_CLUSTER
     ) ? true: false;
     function checkUseBounds(){
       if(zoomLevelInt > ZOOM_LEVEL_THRETHOLD_OF_CLUSTER){
