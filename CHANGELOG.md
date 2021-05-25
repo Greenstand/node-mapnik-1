@@ -1,3 +1,10 @@
+# [4.20.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.19.4...v4.20.0) (2021-05-25)
+
+
+### Features
+
+* dont' use geojson for tree level ([e4b4b8d](https://github.com/Greenstand/node-mapnik-1/commit/e4b4b8d4d42ec8d0d4c2049de4a1494259028aaa))
+
 ## [4.19.4](https://github.com/Greenstand/node-mapnik-1/compare/v4.19.3...v4.19.4) (2021-05-21)
 
 
