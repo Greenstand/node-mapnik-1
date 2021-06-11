@@ -7,7 +7,7 @@ class SQLCase1WithZoomTarget extends SQLCase1{
     //TODO check the conflict case, like: can not set userid and treeIds at the same time
     //add zoom target when zoom level <= 9
     let sql;
-    if(this.getZoomLevel() <= 6){
+    if(this.getZoomLevel() <= parseInt(process.env.MAXIMUM_ZOOM_LEVEL_HANDLING_ZOOM_TARGET)){
       log.info("add zoom target");
       const sqlRaw = super.getQuery();
       sql =  `

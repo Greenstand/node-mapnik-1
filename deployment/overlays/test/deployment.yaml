@@ -6,3 +6,11 @@ metadata:
     app: treetracker-tile-server
 spec:
   replicas: 4
+  template:
+    spec:
+      containers:
+          env:
+            - name: MAXIMUM_ZOOM_LEVEL_USING_GLOBAL_DATASET
+              value: "6"
+            - name: MAXIMUM_ZOOM_LEVEL_HANDLING_ZOOM_TARGET
+              value: "6"
