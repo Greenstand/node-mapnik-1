@@ -16,9 +16,6 @@ spec:
     spec:
       containers:
         - name: treetracker-tile-server
-          image: greenstand/treetracker-map-tile-server:VERSION
-          ports:
-            - containerPort: 80
           env:
             - name: PORT
               value: "3000"
