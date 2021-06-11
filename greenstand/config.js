@@ -6,6 +6,7 @@ const log = require("loglevel");
 const PGPool = require("./PGPool");
 
 
+//bigger than this value, dispaly tree points, rather than, clusters
 const ZOOM_LEVEL_THRETHOLD_OF_CLUSTER = 15;
 
 /*
@@ -135,10 +136,11 @@ class Config {
       }else if(userid){
         log.warn("userid map always use global data set");
         return false;
-      }else if(zoomLevelInt > 6){
-        log.warn("zoom level > 6 use bounds");
+      }else if(zoomLevelInt > parseInt(process.env.MAXIMUM_ZOOM_LEVEL_USING_GLOBAL_DATASET)){
+        log.warn(`zoom level > ${process.env.MAXIMUM_ZOOM_LEVEL_USING_GLOBAL_DATASET} use bounds`);
         return true;
       }else{
+        log.warn("use global data set");
         return false;
       }
     }
