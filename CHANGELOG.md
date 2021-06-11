@@ -1,3 +1,10 @@
+## [4.21.3](https://github.com/Greenstand/node-mapnik-1/compare/v4.21.2...v4.21.3) (2021-06-11)
+
+
+### Bug Fixes
+
+* add settings for test env ([53df6f0](https://github.com/Greenstand/node-mapnik-1/commit/53df6f09bcc4003e282b99827b1fd0f308b27502))
+
 ## [4.21.2](https://github.com/Greenstand/node-mapnik-1/compare/v4.21.1...v4.21.2) (2021-06-11)
 
 
