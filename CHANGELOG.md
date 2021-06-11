@@ -1,3 +1,10 @@
+## [4.21.1](https://github.com/Greenstand/node-mapnik-1/compare/v4.21.0...v4.21.1) (2021-06-11)
+
+
+### Bug Fixes
+
+* action script for test deployment ([6e965de](https://github.com/Greenstand/node-mapnik-1/commit/6e965de4fc3bb78eafd58ab4f63b8d415662cd66))
+
 # [4.21.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.20.0...v4.21.0) (2021-06-11)
 
 
