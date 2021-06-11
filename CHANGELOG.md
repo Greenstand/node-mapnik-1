@@ -1,3 +1,10 @@
+## [4.21.2](https://github.com/Greenstand/node-mapnik-1/compare/v4.21.1...v4.21.2) (2021-06-11)
+
+
+### Bug Fixes
+
+* rollback the test deployment script ([de05480](https://github.com/Greenstand/node-mapnik-1/commit/de05480ba4e4ec448a21a85229dffaf9124caa5d))
+
 ## [4.21.1](https://github.com/Greenstand/node-mapnik-1/compare/v4.21.0...v4.21.1) (2021-06-11)
 
 
