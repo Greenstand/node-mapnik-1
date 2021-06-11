@@ -1,3 +1,10 @@
+# [4.21.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.20.0...v4.21.0) (2021-06-11)
+
+
+### Features
+
+* add settings for controling sql mode ([5e91e81](https://github.com/Greenstand/node-mapnik-1/commit/5e91e8172f08888327990682b362c3c46e034b62))
+
 # [4.20.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.19.4...v4.20.0) (2021-05-25)
 
 
