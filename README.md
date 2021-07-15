@@ -1,5 +1,5 @@
 # node-mapnik
-
+ 
 Bindings to [Mapnik](http://mapnik.org) for [node](http://nodejs.org).
  
 [![NPM](https://nodei.co/npm/mapnik.png?downloads=true&downloadRank=true)](https://nodei.co/npm/mapnik/)
