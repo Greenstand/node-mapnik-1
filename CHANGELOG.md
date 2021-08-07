@@ -1,3 +1,10 @@
+## [4.21.6](https://github.com/Greenstand/node-mapnik-1/compare/v4.21.5...v4.21.6) (2021-08-07)
+
+
+### Bug Fixes
+
+* settings for prod ([c3cad65](https://github.com/Greenstand/node-mapnik-1/commit/c3cad6589458bff2ab4b8eb38851c3c9d3a30df6))
+
 ## [4.21.5](https://github.com/Greenstand/node-mapnik-1/compare/v4.21.4...v4.21.5) (2021-08-07)
 
 
