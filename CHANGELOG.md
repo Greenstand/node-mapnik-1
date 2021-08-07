@@ -1,3 +1,10 @@
+## [4.21.5](https://github.com/Greenstand/node-mapnik-1/compare/v4.21.4...v4.21.5) (2021-08-07)
+
+
+### Bug Fixes
+
+* force release ([89eb658](https://github.com/Greenstand/node-mapnik-1/commit/89eb65824f04358f37cd4f6d787ddf86863d24a3))
+
 ## [4.21.4](https://github.com/Greenstand/node-mapnik-1/compare/v4.21.3...v4.21.4) (2021-07-15)
 
 
