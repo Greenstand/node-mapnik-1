@@ -1,3 +1,10 @@
+## [4.21.8](https://github.com/Greenstand/node-mapnik-1/compare/v4.21.7...v4.21.8) (2021-08-07)
+
+
+### Bug Fixes
+
+* typo ([5b17440](https://github.com/Greenstand/node-mapnik-1/commit/5b17440f16ef1d8fdba63ef64f684288c7eb2537))
+
 ## [4.21.7](https://github.com/Greenstand/node-mapnik-1/compare/v4.21.6...v4.21.7) (2021-08-07)
 
 
