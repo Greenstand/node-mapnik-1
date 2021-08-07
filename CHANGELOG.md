@@ -1,3 +1,10 @@
+## [4.21.7](https://github.com/Greenstand/node-mapnik-1/compare/v4.21.6...v4.21.7) (2021-08-07)
+
+
+### Bug Fixes
+
+* switch to original db user ([638a19a](https://github.com/Greenstand/node-mapnik-1/commit/638a19a442cc764d26e65e9a55612a3ceebf9d1f))
+
 ## [4.21.6](https://github.com/Greenstand/node-mapnik-1/compare/v4.21.5...v4.21.6) (2021-08-07)
 
 
