@@ -37,5 +37,5 @@ spec:
             - name: DB_URL
               valueFrom:
                 secretKeyRef:
-                  name: database-connection
+                  name: database-connection-pgpool
                   key: db
