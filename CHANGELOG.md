@@ -1,3 +1,10 @@
+# [4.22.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.21.8...v4.22.0) (2021-08-10)
+
+
+### Features
+
+* switch to use materialized view form tile ([4da37cf](https://github.com/Greenstand/node-mapnik-1/commit/4da37cfc30f40307ba3637f185e95729f883fb09))
+
 ## [4.21.8](https://github.com/Greenstand/node-mapnik-1/compare/v4.21.7...v4.21.8) (2021-08-07)
 
 
