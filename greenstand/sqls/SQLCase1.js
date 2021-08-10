@@ -38,9 +38,12 @@ class SQLCase1{
               INNER JOIN (
                 SELECT id FROM planter
                 JOIN (
-                  SELECT entity_id FROM getEntityRelationshipChildren(
-                    (SELECT id FROM entity WHERE map_name = '${this.mapName}')
-                  )
+                  SELECT
+                    UNNEST(children) AS entity_id
+                    FROM
+                      organization_children
+                      WHERE
+                        map_name = '${this.mapName}'
                 ) org ON planter.organization_id = org.entity_id
               ) planter_ids
               ON trees.planter_id = planter_ids.id
@@ -49,9 +52,12 @@ class SQLCase1{
               INNER JOIN (
                 SELECT id FROM planter
                 JOIN (
-                  SELECT entity_id FROM getEntityRelationshipChildren(
-                    (SELECT id FROM entity WHERE map_name = '${this.mapName}')
-                  )
+                  SELECT
+                    UNNEST(children) AS entity_id
+                    FROM
+                      organization_children
+                      WHERE
+                        map_name = '${this.mapName}'
                 ) org ON planter.organization_id = org.entity_id
               ) planter_ids
               ON trees.planter_id = planter_ids.id
