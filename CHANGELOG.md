@@ -1,3 +1,10 @@
+## [4.22.3](https://github.com/Greenstand/node-mapnik-1/compare/v4.22.2...v4.22.3) (2021-08-12)
+
+
+### Bug Fixes
+
+* the international date line problem ([ab2100c](https://github.com/Greenstand/node-mapnik-1/commit/ab2100c6b9dedbbda9d4353209144eb1aed5e8ea))
+
 ## [4.22.2](https://github.com/Greenstand/node-mapnik-1/compare/v4.22.1...v4.22.2) (2021-08-10)
 
 
