@@ -104,8 +104,11 @@ class SQLCase1{
       'case1 tile' AS log,
       NULL AS zoom_to,
       region_id id, 
-      centroid estimated_geometric_location,
-      St_asgeojson(centroid) latlon,
+      ${this.getZoomLevel() === 2?
+      "st_point(LEAST(st_x(centroid), 170), st_y(centroid)) estimated_geometric_location,St_asgeojson(st_point(LEAST(st_x(centroid), 170), st_y(centroid))) latlon,"
+        :
+      "centroid estimated_geometric_location,St_asgeojson(centroid) latlon,"
+      }
       type_id as region_type,
       count(tree_region.id) count,
       CASE WHEN count(tree_region.id) > 1000 
