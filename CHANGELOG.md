@@ -1,3 +1,15 @@
+# [4.23.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.22.3...v4.23.0) (2021-08-13)
+
+
+### Bug Fixes
+
+* reverse the materialized view for org ([5d4da28](https://github.com/Greenstand/node-mapnik-1/commit/5d4da28a7c056c555d790c407e00b9c9f8c16408))
+
+
+### Features
+
+* use with clause the optmize SQL ([d8f0a4e](https://github.com/Greenstand/node-mapnik-1/commit/d8f0a4e3e2d77a612766e0bb9083d402e12f90fb))
+
 ## [4.22.3](https://github.com/Greenstand/node-mapnik-1/compare/v4.22.2...v4.22.3) (2021-08-12)
 
 
