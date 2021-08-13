@@ -9,9 +9,10 @@ class SQLCase1WithZoomTarget extends SQLCase1{
     let sql;
     if(this.getZoomLevel() <= parseInt(process.env.MAXIMUM_ZOOM_LEVEL_HANDLING_ZOOM_TARGET)){
       log.info("add zoom target");
-      const sqlRaw = super.getQuery();
+      const sqlRaw = super.getQuery({disableWith:true});
       sql =  `
         /* sql case1 */
+  ${this.getWith()}
   SELECT 
     'cluster' AS type,
     'case1 with zoom target tile' AS log,

@@ -19,6 +19,9 @@ class SQLCase1{
     if(this.isFilteringByUserId){
       result += "JOIN trees ON tree_region.tree_id = trees.id";
     }
+    if(this.mapName){
+      result += "INNER JOIN org_tree_id ON org_tree_id.id = tree_region.tree_id";
+    }
     return result;
   }
 
@@ -29,35 +32,6 @@ class SQLCase1{
     }
     if(this.treeIds && this.treeIds.length > 0){
       result += "AND tree_region.tree_id IN(" + this.treeIds.join(",") + ") ";
-    }
-    if(this.mapName){
-      result += `
-        AND tree_region.tree_id IN(
-          select distinct * from ( 
-            SELECT trees.id as id from trees
-              INNER JOIN (
-                SELECT id FROM planter
-                JOIN (
-                  SELECT entity_id FROM getEntityRelationshipChildren(
-                    (SELECT id FROM entity WHERE map_name = '${this.mapName}')
-                  )
-                ) org ON planter.organization_id = org.entity_id
-              ) planter_ids
-              ON trees.planter_id = planter_ids.id
-          union all 
-            SELECT trees.id as id from trees
-              INNER JOIN (
-                SELECT id FROM planter
-                JOIN (
-                  SELECT entity_id FROM getEntityRelationshipChildren(
-                    (SELECT id FROM entity WHERE map_name = '${this.mapName}')
-                  )
-                ) org ON planter.organization_id = org.entity_id
-              ) planter_ids
-              ON trees.planter_id = planter_ids.id
-          ) t1
-        )
-      `;
     }
     return result;
   }
@@ -89,10 +63,34 @@ class SQLCase1{
     this.mapName = mapName;
   }
 
-  getQuery(){
+  /*
+   * The with cause
+   */
+  getWith(){
+    let withClause = `WITH placeholder AS (SELECT 1)`;
+    if(this.mapName){
+      withClause += `
+        ,org_tree_id AS (
+        SELECT trees.id as id from trees
+          INNER JOIN (
+            SELECT id FROM planter
+            JOIN (
+              SELECT entity_id FROM getEntityRelationshipChildren(
+                (SELECT id FROM entity WHERE map_name = '${this.mapName}')
+              ) LIMIT 20
+            ) org ON planter.organization_id = org.entity_id
+          ) planter_ids
+          ON trees.planter_id = planter_ids.id
+      )`;
+    }
+    return withClause;
+  }
+
+  getQuery(options = {}){
     //TODO check the conflict case, like: can not set userid and treeIds at the same time
     const text = `
       /* sql case1 tile */
+      ${!options.disableWith && this.getWith() || ""}
       SELECT 
       'cluster' AS type,
       'case1 tile' AS log,
