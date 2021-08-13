@@ -91,36 +91,27 @@ class SQLCase3{
     if(this.wallet) {
       result += "AND wallet.wallet.name = '" + this.wallet + "'"
     }
-    if(this.mapName){
-      result += `
-        AND trees.id IN(
-          select distinct * from ( 
-            SELECT trees.id as id from trees
-              INNER JOIN (
-                SELECT id FROM planter
-                JOIN (
-                  SELECT entity_id FROM getEntityRelationshipChildren(
-                    (SELECT id FROM entity WHERE map_name = '${this.mapName}')
-                  )
-                ) org ON planter.organization_id = org.entity_id
-              ) planter_ids
-              ON trees.planter_id = planter_ids.id
-          union all 
-            SELECT trees.id as id from trees
-              INNER JOIN (
-                SELECT id FROM planter
-                JOIN (
-                  SELECT entity_id FROM getEntityRelationshipChildren(
-                    (SELECT id FROM entity WHERE map_name = '${this.mapName}')
-                  )
-                ) org ON planter.organization_id = org.entity_id
-              ) planter_ids
-              ON trees.planter_id = planter_ids.id
-          ) t1
-        )
-      `;
-    }
     return result;
+  }
+
+  getWith(){
+    let withClause = `WITH placeholder AS (SELECT 1)`;
+    if(this.mapName){
+      withClause += `
+        ,org_tree_id AS (
+        SELECT trees.id as id from trees
+          INNER JOIN (
+            SELECT id FROM planter
+            JOIN (
+              SELECT entity_id FROM getEntityRelationshipChildren(
+                (SELECT id FROM entity WHERE map_name = '${this.mapName}')
+              ) LIMIT 20
+            ) org ON planter.organization_id = org.entity_id
+          ) planter_ids
+          ON trees.planter_id = planter_ids.id
+      )`;
+    }
+    return withClause;
   }
 
   getJoin(){
@@ -134,6 +125,9 @@ class SQLCase3{
     }
     if(this.token){
       result += "INNER JOIN certificates ON trees.certificate_id = certificates.id AND certificates.token = '" + this.token + "'";
+    }
+    if(this.mapName){
+      result += "INNER JOIN org_tree_id ON org_tree_id.id = trees.id";
     }
     return result;
   }
@@ -162,6 +156,7 @@ class SQLCase3{
     console.log('Calculating clusters directly');
     const query =  `
         /* case3 tile */
+        ${this.getWith()}
         SELECT 'cluster'                                           AS type,
         0 AS id,
         'case3 tile' AS log,

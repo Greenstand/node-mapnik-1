@@ -49,35 +49,6 @@ class SQLCase2{
     if(this.uuid){
       result += 'AND trees.uuid = ' + this.uuid + ' \n';
     }
-    if(this.mapName){
-      result += `
-        AND trees.id IN(
-          select distinct * from ( 
-            SELECT trees.id as id from trees
-              INNER JOIN (
-                SELECT id FROM planter
-                JOIN (
-                  SELECT entity_id FROM getEntityRelationshipChildren(
-                    (SELECT id FROM entity WHERE map_name = '${this.mapName}')
-                  )
-                ) org ON planter.organization_id = org.entity_id
-              ) planter_ids
-              ON trees.planter_id = planter_ids.id
-          union all 
-            SELECT trees.id as id from trees
-              INNER JOIN (
-                SELECT id FROM planter
-                JOIN (
-                  SELECT entity_id FROM getEntityRelationshipChildren(
-                    (SELECT id FROM entity WHERE map_name = '${this.mapName}')
-                  )
-                ) org ON planter.organization_id = org.entity_id
-              ) planter_ids
-              ON trees.planter_id = planter_ids.id
-          ) t1
-        )
-      `;
-    }
     if(this.userId){
       result += "AND trees.planter_id = " + this.userId + " \n";
     }
@@ -119,12 +90,36 @@ class SQLCase2{
     if(this.flavor){
       result += "INNER JOIN tree_attributes ON tree_attributes.tree_id = trees.id";
     }
+    if(this.mapName){
+      result += "INNER JOIN org_tree_id ON org_tree_id.id = trees.id";
+    }
     return result;
+  }
+
+  getWith(){
+    let withClause = `WITH placeholder AS (SELECT 1)`;
+    if(this.mapName){
+      withClause += `
+        ,org_tree_id AS (
+        SELECT trees.id as id from trees
+          INNER JOIN (
+            SELECT id FROM planter
+            JOIN (
+              SELECT entity_id FROM getEntityRelationshipChildren(
+                (SELECT id FROM entity WHERE map_name = '${this.mapName}')
+              ) LIMIT 20
+            ) org ON planter.organization_id = org.entity_id
+          ) planter_ids
+          ON trees.planter_id = planter_ids.id
+      )`;
+    }
+    return withClause;
   }
 
   getQuery(){
     let sql = `
       /* sql case2 tile */
+      ${this.getWith()}
       SELECT /* DISTINCT ON(trees.id) */
       'case2 tile' AS log,
       estimated_geometric_location,

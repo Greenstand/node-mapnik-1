@@ -47,6 +47,7 @@ class SQLCase3Timeline extends SQLCase3{
 //    const query = {
     const text= `
         /* case3 timelinej*/
+        ${this.getWith()}
         SELECT 'cluster'                                           AS type,
         St_asgeojson(St_centroid(clustered_locations))                 centroid,
         St_numgeometries(clustered_locations)                          count
