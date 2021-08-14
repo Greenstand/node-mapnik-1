@@ -1,3 +1,10 @@
+# [4.24.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.23.0...v4.24.0) (2021-08-14)
+
+
+### Features
+
+* wallet use case1 when big ([442809f](https://github.com/Greenstand/node-mapnik-1/commit/442809f2b3aed042b37bccbc61b279c009db11be))
+
 # [4.23.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.22.3...v4.23.0) (2021-08-13)
 
 
