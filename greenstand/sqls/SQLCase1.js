@@ -14,13 +14,21 @@ class SQLCase1{
     this.userId = userId;
   }
 
+  addFilterByWallet(wallet){
+    this.wallet = wallet;
+  }
+
   getJoin(){
     let result = "";
-    if(this.isFilteringByUserId){
-      result += "JOIN trees ON tree_region.tree_id = trees.id";
+    if(this.isFilteringByUserId || this.wallet){
+      result += "JOIN trees ON tree_region.tree_id = trees.id\n";
     }
     if(this.mapName){
-      result += "INNER JOIN org_tree_id ON org_tree_id.id = tree_region.tree_id";
+      result += "INNER JOIN org_tree_id ON org_tree_id.id = tree_region.tree_id\n";
+    }
+    if(this.wallet){
+      result += 'INNER JOIN wallet.token ON wallet.token.capture_id::text = trees.uuid \n';
+      result += 'INNER JOIN wallet.wallet ON wallet.wallet.id = wallet.token.wallet_id \n';
     }
     return result;
   }
@@ -32,6 +40,9 @@ class SQLCase1{
     }
     if(this.treeIds && this.treeIds.length > 0){
       result += "AND tree_region.tree_id IN(" + this.treeIds.join(",") + ") ";
+    }
+    if(this.wallet) {
+      result += "AND wallet.wallet.name = '" + this.wallet + "'"
     }
     return result;
   }

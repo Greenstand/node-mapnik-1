@@ -71,15 +71,35 @@ class Map{
       /*
        * wallet map mode
        */
+      //count the trees amount first
+      const result = await this.pool.query({
+        text: `
+        SELECT count(wallet.token.id)
+        FROM wallet."token" 
+        INNER JOIN wallet.wallet ON wallet.wallet.id = wallet.token.wallet_id
+        WHERE wallet.wallet.name = '${this.wallet}'
+        `,
+        values:[]
+      });
+      const treeCount = result.rows[0].count;
+      parseInt(treeCount);
+      log.warn("count by userId %d, get %s", this.userid, treeCount);
       if(this.zoomLevel > 15){
         this.sql = new SQLCase2();
         this.sql.setBounds(this.bounds);
         this.sql.addFilterByWallet(this.wallet);
       }else{
-        this.sql = new SQLCase3();
-        this.sql.setZoomLevel(this.zoomLevel);
+        if(treeCount > 100){
+          this.sql = new SQLCase1WithZoomTarget();
+          this.sql.addFilterByWallet(this.wallet);
+          this.sql.setZoomLevel(this.zoomLevel);
+          this.sql.setBounds(this.bounds);
+        }else{
+          this.sql = new SQLCase3();
+          this.sql.setZoomLevel(this.zoomLevel);
         this.sql.addFilterByWallet(this.wallet);
-        this.sql.setBounds(this.bounds);
+          this.sql.setBounds(this.bounds);
+        }
       }
     }else if(this.mapName){
       /*
