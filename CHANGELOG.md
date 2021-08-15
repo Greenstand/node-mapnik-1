@@ -1,3 +1,10 @@
+# [4.25.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.24.0...v4.25.0) (2021-08-15)
+
+
+### Features
+
+* use with clause to find children of org ([a0906e1](https://github.com/Greenstand/node-mapnik-1/commit/a0906e168b269723c64c1bea9df80c1cdf2ccea2))
+
 # [4.24.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.23.0...v4.24.0) (2021-08-14)
 
 
