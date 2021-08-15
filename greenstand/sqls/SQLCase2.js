@@ -99,19 +99,30 @@ class SQLCase2{
   getWith(){
     let withClause = `WITH placeholder AS (SELECT 1)`;
     if(this.mapName){
-      withClause += `
-        ,org_tree_id AS (
-        SELECT trees.id as id from trees
-          INNER JOIN (
-            SELECT id FROM planter
-            JOIN (
-              SELECT entity_id FROM getEntityRelationshipChildren(
-                (SELECT id FROM entity WHERE map_name = '${this.mapName}')
-              ) LIMIT 20
-            ) org ON planter.organization_id = org.entity_id
-          ) planter_ids
-          ON trees.planter_id = planter_ids.id
-      )`;
+      //replace the withClause 
+      withClause = `
+        WITH RECURSIVE organization_children AS (
+           SELECT entity.id, entity_relationship.parent_id, 1 as depth, entity_relationship.type, entity_relationship.role
+           FROM entity
+           LEFT JOIN entity_relationship ON entity_relationship.child_id = entity.id 
+           WHERE entity.id IN (SELECT id FROM entity WHERE map_name = '${this.mapName}')
+          UNION
+           SELECT next_child.id, entity_relationship.parent_id, depth + 1, entity_relationship.type, entity_relationship.role
+           FROM entity next_child
+           JOIN entity_relationship ON entity_relationship.child_id = next_child.id 
+           JOIN organization_children c ON entity_relationship.parent_id = c.id
+          )
+            ,org_tree_id AS (
+            SELECT trees.id as id from trees
+              INNER JOIN (
+                SELECT id FROM planter
+                JOIN (
+                  SELECT id AS entity_id FROM organization_children LIMIT 20
+                ) org ON planter.organization_id = org.entity_id
+              ) planter_ids
+              ON trees.planter_id = planter_ids.id
+            )
+     	`;
     }
     return withClause;
   }
