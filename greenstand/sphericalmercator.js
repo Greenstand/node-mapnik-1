@@ -83,7 +83,6 @@ SphericalMercator.prototype.xyz_to_envelope = function(x, y, zoom, TMS_SCHEME) {
     var ll = [x * this.size, (y + 1) * this.size];
     var ur = [(x + 1) * this.size, y * this.size];
     var bbox = this.px_to_ll(ll, zoom).concat(this.px_to_ll(ur, zoom));
-    console.warn("bbox:", bbox);
     return mercator.forward(bbox);
 };
 
@@ -94,7 +93,6 @@ SphericalMercator.prototype.xyz_to_envelope_db = function(x, y, zoom, TMS_SCHEME
     var ll = [x * this.size, (y + 1) * this.size];
     var ur = [(x + 1) * this.size, y * this.size];
     var bbox = this.px_to_ll(ll, zoom).concat(this.px_to_ll(ur, zoom));
-    console.warn("bbox db:", bbox);
     return bbox;
 };
 
@@ -130,7 +128,6 @@ SphericalMercator.prototype.xyz_to_envelope_db_buffer = function(x, y, zoom, TMS
       clipLon(bbox[2]), 
       clipLat(bbox[3]),
     ]
-    console.warn("bbox db:", bbox);
     return bbox;
 };
 
