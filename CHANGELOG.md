@@ -1,3 +1,10 @@
+# [4.26.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.25.0...v4.26.0) (2021-08-16)
+
+
+### Features
+
+* improve log, error handler ([e22b854](https://github.com/Greenstand/node-mapnik-1/commit/e22b854c473540e5008cd50f63950f2d041c3b27))
+
 # [4.25.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.24.0...v4.25.0) (2021-08-15)
 
 
