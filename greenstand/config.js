@@ -124,23 +124,23 @@ class Config {
     ) ? true: false;
     function checkUseBounds(){
       if(zoomLevelInt > ZOOM_LEVEL_THRETHOLD_OF_CLUSTER){
-        log.warn("zoom level for trees should use bounds anyway");
+        log.info("zoom level for trees should use bounds anyway");
         return true;
       }
       if(map_name){
-        log.warn("org map always use global data set");
+        log.info("org map always use global data set");
         return false;
       }else if(wallet){
-        log.warn("wallet map always use global data set");
+        log.info("wallet map always use global data set");
         return false;
       }else if(userid){
-        log.warn("userid map always use global data set");
+        log.info("userid map always use global data set");
         return false;
       }else if(zoomLevelInt > parseInt(process.env.MAXIMUM_ZOOM_LEVEL_USING_GLOBAL_DATASET)){
-        log.warn(`zoom level > ${process.env.MAXIMUM_ZOOM_LEVEL_USING_GLOBAL_DATASET} use bounds`);
+        log.info(`zoom level > ${process.env.MAXIMUM_ZOOM_LEVEL_USING_GLOBAL_DATASET} use bounds`);
         return true;
       }else{
-        log.warn("use global data set");
+        log.info("use global data set");
         return false;
       }
     }
@@ -155,20 +155,20 @@ class Config {
       bounds: useBounds? bounds: undefined,//json mode do not need bounds
     });
     const sql = await map.getQuery();
-    log.warn("sql:", sql);
+    log.info("sql:", sql);
 
     let result;
 
     //handle geojson case
     if(useGeoJson){
-      log.warn("handle geojson...");
+      log.info("handle geojson...");
       const xmlJsonTemplate = zoomLevelInt > 15?
         xmlJsonForTree
         :
         xmlJson;
 
       result = await this.pgPool.getQuery(sql, (result) => {
-        log.info("result:", result);
+        log.debug("result:", result);
         const points = result.rows.map(row => {
           const coord = JSON.parse(row.latlon).coordinates;
           const count = parseInt(row.count);

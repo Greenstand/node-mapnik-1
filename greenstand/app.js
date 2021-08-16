@@ -8,7 +8,7 @@ const {Config} = require("./config");
 
 const connectionString = process.env.DB_URL;
 const max = process.env.PG_POOL_SIZE && parseInt(process.env.PG_POOL_SIZE) || 10;
-log.warn("pool settings:db:%s; pool size: %d", connectionString, max);
+log.info("pool settings:db:%s; pool size: %d", connectionString, max);
 const pool = new Pool({ 
   connectionString,
   max,
@@ -20,12 +20,12 @@ const config = new Config(pool);
 //font
 mapnik.register_default_fonts();
 mapnik.register_default_input_plugins();
-log.warn("fonts:", mapnik.fonts());
+log.info("fonts:", mapnik.fonts());
 const mapInstance = new mapnik.Map(256, 256);
 mapInstance.registerFonts(path.join(__dirname, '../test/data/map-a/'), {recurse:true});
-log.warn("font instance:", mapInstance.fonts());
+log.info("font instance:", mapInstance.fonts());
 mapnik.Logger.setSeverity(mapnik.Logger.DEBUG);
-log.warn("log level of mapnik:", mapnik.Logger.getSeverity());
+log.info("log level of mapnik:", mapnik.Logger.getSeverity());
 const mercator = require('./sphericalmercator')
 
 const app = express();
@@ -54,7 +54,7 @@ async function buildMapInstance(x, y, z, params){
       100,
     );
     const bounds = bboxDb.join(",");
-    log.warn("bounds:", bounds);
+    log.debug("bounds:", bounds);
     const xmlString = await config.getXMLString({
       zoomLevel: z,
       bounds,
@@ -66,7 +66,7 @@ async function buildMapInstance(x, y, z, params){
       base: __dirname,
     },function(err,_map) {
       if(err){
-        console.error("e:", err);
+        log.error("e when fromString:", err);
         throw "failed";
       }
       //      if (options.bufferSize) {
@@ -75,31 +75,32 @@ async function buildMapInstance(x, y, z, params){
       res(_map);
     });
   });
-  console.log("map:", map);
-  console.log("x,y,z:", x,y,z);
+  log.debug("map:", map);
+  log.debug("x,y,z:", x,y,z);
   // bbox for x,y,z
   const bbox = mercator.xyz_to_envelope(//x, y, z, false);
     parseInt(x),
     parseInt(y),
     parseInt(z), false);
-  console.log("bbox:", bbox);
+  log.debug("bbox:", bbox);
   //map.zoomAll();
   map.extent = bbox;
-  console.log("map:", map);
-  console.log("map extent:", map.extent);
-  console.log("map.zoomAll:", map.zoomAll);
-  console.log("map.zoomToBox:", map.zoomToBox);
-  console.log("map.load:", map.load);
-  console.log("map.scale:", map.scale());
-  console.log("map.scaleDenominator:", map.scaleDenominator());
+  log.debug("map:", map);
+  log.debug("map extent:", map.extent);
+  log.debug("map.zoomAll:", map.zoomAll);
+  log.debug("map.zoomToBox:", map.zoomToBox);
+  log.debug("map.load:", map.load);
+  log.debug("map.scale:", map.scale());
+  log.debug("map.scaleDenominator:", map.scaleDenominator());
   return map;
 }
 
 app.get("/:z/:x/:y.png", async (req, res) => {
+try{
   const {x,y,z} = req.params;
   const begin = Date.now();
   const map = await buildMapInstance(x, y, z, req.query);
-  log.warn("Build map took:", Date.now() - begin, x,y,z,".png");
+  log.info("Build map took:", Date.now() - begin, x,y,z,".png");
   const begin2 = Date.now();
   const im = new mapnik.Image(256, 256);
   const buffer = await new Promise((res, rej) => {
@@ -111,17 +112,21 @@ app.get("/:z/:x/:y.png", async (req, res) => {
       });
     });
   });
-  log.warn("Render map took:", Date.now() - begin2, x,y,z,".png");
+  log.info("Render map took:", Date.now() - begin2, x,y,z,".png");
   res.set({'Content-Type': 'image/png'});
   res.end(buffer);
-
+}catch(e){
+  log.error("got error in handler:", e);
+  res.status(500).json({message:"something wrong:" + error});
+}
 });
 
 app.get("/:z/:x/:y.grid.json", async (req, res) => {
+try{
   const {x,y,z} = req.params;
   const begin = Date.now();
   const map = await buildMapInstance(x, y, z, req.query);
-  log.warn("Build map took:", Date.now() - begin, x,y,z,".grid");
+  log.info("Build map took:", Date.now() - begin, x,y,z,".grid");
   const begin2 = Date.now();
   var grid = new mapnik.Grid(256, 256);
   const fields = ["id", "latlon", "count", "type"];
@@ -135,14 +140,18 @@ app.get("/:z/:x/:y.grid.json", async (req, res) => {
         fields,
       }, function(err, grid) {
       if (err) throw err;
-      console.log(grid);
+      log.debug("grid:",grid);
       const json = grid.encodeSync({resolution: 4, features: true});
       res(json);
     });
   });
-  log.warn("Render map took:", Date.now() - begin2, x,y,z,".grid");
+  log.info("Render map took:", Date.now() - begin2, x,y,z,".grid");
   res.set({'Content-Type': 'application/json'});
   res.json(json);
+}catch(e){
+  log.error("got error in handler:", e);
+  res.status(500).json({message:"something wrong:" + error});
+}
 });
 
 
