@@ -89,7 +89,7 @@ class Map{
         this.sql.setBounds(this.bounds);
         this.sql.addFilterByWallet(this.wallet);
       }else{
-        if(treeCount > 100){
+        if(treeCount > 2000){
           this.sql = new SQLCase1WithZoomTarget();
           this.sql.addFilterByWallet(this.wallet);
           this.sql.setZoomLevel(this.zoomLevel);
