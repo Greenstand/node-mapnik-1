@@ -1,3 +1,10 @@
+## [4.26.1](https://github.com/Greenstand/node-mapnik-1/compare/v4.26.0...v4.26.1) (2021-08-17)
+
+
+### Bug Fixes
+
+* too small threshold ([a1d190d](https://github.com/Greenstand/node-mapnik-1/commit/a1d190d61c4edabe219cedc256de06b4853090ce))
+
 # [4.26.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.25.0...v4.26.0) (2021-08-16)
 
 
