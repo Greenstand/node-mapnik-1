@@ -53,8 +53,11 @@ class SQLCase2{
       result += "AND trees.planter_id = " + this.userId + " \n";
     }
     if(this.wallet) {
-      result += "AND wallet.wallet.name = '" + this.wallet + "'"
+      result += "AND wallet.wallet.name = '" + this.wallet + "'\n"
     }
+		if(this.mapName){
+			result += "AND trees.planter_id IN (SELECT id FROM planter_in_org)\n";
+		}
     return result;
   }
 
@@ -90,9 +93,6 @@ class SQLCase2{
     if(this.flavor){
       result += "INNER JOIN tree_attributes ON tree_attributes.tree_id = trees.id";
     }
-    if(this.mapName){
-      result += "INNER JOIN org_tree_id ON org_tree_id.id = trees.id";
-    }
     return result;
   }
 
@@ -101,27 +101,23 @@ class SQLCase2{
     if(this.mapName){
       //replace the withClause 
       withClause = `
-        WITH RECURSIVE organization_children AS (
-           SELECT entity.id, entity_relationship.parent_id, 1 as depth, entity_relationship.type, entity_relationship.role
-           FROM entity
-           LEFT JOIN entity_relationship ON entity_relationship.child_id = entity.id 
-           WHERE entity.id IN (SELECT id FROM entity WHERE map_name = '${this.mapName}')
-          UNION
-           SELECT next_child.id, entity_relationship.parent_id, depth + 1, entity_relationship.type, entity_relationship.role
-           FROM entity next_child
-           JOIN entity_relationship ON entity_relationship.child_id = next_child.id 
-           JOIN organization_children c ON entity_relationship.parent_id = c.id
-          )
-            ,org_tree_id AS (
-            SELECT trees.id as id from trees
-              INNER JOIN (
-                SELECT id FROM planter
-                JOIN (
-                  SELECT id AS entity_id FROM organization_children LIMIT 20
-                ) org ON planter.organization_id = org.entity_id
-              ) planter_ids
-              ON trees.planter_id = planter_ids.id
-            )
+WITH RECURSIVE organization_children AS (
+    SELECT entity.id, entity_relationship.parent_id, 1 as depth, entity_relationship.type, entity_relationship.role
+    FROM entity
+    LEFT JOIN entity_relationship ON entity_relationship.child_id = entity.id
+    WHERE entity.id IN (SELECT id FROM entity WHERE map_name = 'freetown')
+    UNION
+    SELECT next_child.id, entity_relationship.parent_id, depth + 1, entity_relationship.type, entity_relationship.role
+    FROM entity next_child
+    JOIN entity_relationship ON entity_relationship.child_id = next_child.id
+    JOIN organization_children c ON entity_relationship.parent_id = c.id
+    )
+,planter_in_org AS (
+	SELECT id FROM planter
+      JOIN (
+        SELECT id AS entity_id FROM organization_children LIMIT 20
+        ) org ON planter.organization_id = org.entity_id
+)
      	`;
     }
     return withClause;
