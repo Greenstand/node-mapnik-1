@@ -1,3 +1,10 @@
+## [4.26.2](https://github.com/Greenstand/node-mapnik-1/compare/v4.26.1...v4.26.2) (2021-08-17)
+
+
+### Bug Fixes
+
+* set log level ([cb9d96f](https://github.com/Greenstand/node-mapnik-1/commit/cb9d96f1bebbe71d7bb0d008f44355236d6f34bf))
+
 ## [4.26.1](https://github.com/Greenstand/node-mapnik-1/compare/v4.26.0...v4.26.1) (2021-08-17)
 
 
