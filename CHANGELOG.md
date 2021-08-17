@@ -1,3 +1,10 @@
+# [4.27.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.26.2...v4.27.0) (2021-08-17)
+
+
+### Features
+
+* better SQL for tree point in org ([466c49d](https://github.com/Greenstand/node-mapnik-1/commit/466c49dc58380584659652991c78e417b5b1d541))
+
 ## [4.26.2](https://github.com/Greenstand/node-mapnik-1/compare/v4.26.1...v4.26.2) (2021-08-17)
 
 
