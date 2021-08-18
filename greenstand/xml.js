@@ -94,6 +94,7 @@ const xml =`
        <Parameter name="table"><![CDATA[(select * from trees) as cdbq]]></Parameter>
        <Parameter name="dbname"><![CDATA[treetracker_dev]]></Parameter>
        <Parameter name="geometry_field"><![CDATA[estimated_geometric_location]]></Parameter>
+       <Parameter name="connect_timeout">180</Parameter>
     </Datasource>
   </Layer>
 
@@ -183,6 +184,7 @@ const xmlTree =`
        <Parameter name="table"><![CDATA[(select * from trees) as cdbq]]></Parameter>
        <Parameter name="dbname"><![CDATA[treetracker_dev]]></Parameter>
        <Parameter name="geometry_field"><![CDATA[estimated_geometric_location]]></Parameter>
+       <Parameter name="connect_timeout">180</Parameter>
     </Datasource>
   </Layer>
 
