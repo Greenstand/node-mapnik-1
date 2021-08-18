@@ -1,3 +1,10 @@
+## [4.27.1](https://github.com/Greenstand/node-mapnik-1/compare/v4.27.0...v4.27.1) (2021-08-18)
+
+
+### Bug Fixes
+
+* increase timeout for mapnik ([12de14a](https://github.com/Greenstand/node-mapnik-1/commit/12de14a571beee587a39fb59879a62455c4f8f89))
+
 # [4.27.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.26.2...v4.27.0) (2021-08-17)
 
 
