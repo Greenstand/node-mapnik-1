@@ -124,8 +124,9 @@ class Config {
     ) ? true: false;
     function checkUseBounds(){
       if(zoomLevelInt > ZOOM_LEVEL_THRETHOLD_OF_CLUSTER){
-        log.info("zoom level for trees should use bounds anyway");
-        return true;
+				//mapnik would add the bounds automatically
+        log.info("zoom level for trees should not use bounds anyway");
+        return false;
       }
       if(map_name){
         log.info("org map always use global data set");
