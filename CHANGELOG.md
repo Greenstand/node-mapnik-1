@@ -1,3 +1,10 @@
+## [4.27.2](https://github.com/Greenstand/node-mapnik-1/compare/v4.27.1...v4.27.2) (2021-08-19)
+
+
+### Bug Fixes
+
+* wrong db user ([4acd821](https://github.com/Greenstand/node-mapnik-1/commit/4acd821d4f39afc663d76cc3401ff0cb4add9405))
+
 ## [4.27.1](https://github.com/Greenstand/node-mapnik-1/compare/v4.27.0...v4.27.1) (2021-08-18)
 
 
