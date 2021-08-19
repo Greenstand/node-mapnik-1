@@ -1,3 +1,10 @@
+## [4.27.5](https://github.com/Greenstand/node-mapnik-1/compare/v4.27.4...v4.27.5) (2021-08-19)
+
+
+### Bug Fixes
+
+* sql extremelly slow ([2f92e93](https://github.com/Greenstand/node-mapnik-1/commit/2f92e93b534e837a81ef5270999e2199e8d21780))
+
 ## [4.27.4](https://github.com/Greenstand/node-mapnik-1/compare/v4.27.3...v4.27.4) (2021-08-19)
 
 
