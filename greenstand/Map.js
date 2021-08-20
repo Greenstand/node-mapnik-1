@@ -1,5 +1,6 @@
 const log = require("loglevel");
 const SQLCase2 = require("./sqls/SQLCase2");
+const SQLCase2Wallet = require("./sqls/SQLCase2Wallet");
 const SQLCase2Timeline = require("./sqls/SQLCase2Timeline");
 const SQLCase1 = require("./sqls/SQLCase1");
 const SQLCase1WithZoomTarget = require("./sqls/SQLCase1WithZoomTarget");
@@ -85,7 +86,7 @@ class Map{
       parseInt(treeCount);
       log.warn("count by userId %d, get %s", this.userid, treeCount);
       if(this.zoomLevel > 15){
-        this.sql = new SQLCase2();
+        this.sql = new SQLCase2Wallet();
         this.sql.setBounds(this.bounds);
         this.sql.addFilterByWallet(this.wallet);
       }else{
