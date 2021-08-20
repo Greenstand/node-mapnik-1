@@ -1,3 +1,10 @@
+# [4.28.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.27.5...v4.28.0) (2021-08-20)
+
+
+### Features
+
+* optimize SQL for wallet tree tile ([31f89bf](https://github.com/Greenstand/node-mapnik-1/commit/31f89bfc02e9247556c470aedc118ec661fa1724))
+
 ## [4.27.5](https://github.com/Greenstand/node-mapnik-1/compare/v4.27.4...v4.27.5) (2021-08-19)
 
 
