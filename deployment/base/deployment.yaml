@@ -5,7 +5,7 @@ metadata:
   labels:
     app: treetracker-tile-server
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: treetracker-tile-server
