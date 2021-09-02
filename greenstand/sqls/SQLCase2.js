@@ -105,7 +105,7 @@ WITH RECURSIVE organization_children AS (
     SELECT entity.id, entity_relationship.parent_id, 1 as depth, entity_relationship.type, entity_relationship.role
     FROM entity
     LEFT JOIN entity_relationship ON entity_relationship.child_id = entity.id
-    WHERE entity.id IN (SELECT id FROM entity WHERE map_name = 'freetown')
+    WHERE entity.id IN (SELECT id FROM entity WHERE map_name = '${this.mapName}')
     UNION
     SELECT next_child.id, entity_relationship.parent_id, depth + 1, entity_relationship.type, entity_relationship.role
     FROM entity next_child
