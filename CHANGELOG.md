@@ -1,3 +1,10 @@
+## [4.28.1](https://github.com/Greenstand/node-mapnik-1/compare/v4.28.0...v4.28.1) (2021-09-02)
+
+
+### Bug Fixes
+
+* bug in org map on tree points level ([109a1ad](https://github.com/Greenstand/node-mapnik-1/commit/109a1ad53404d93aca9e40edfa9663954f6075e9))
+
 # [4.28.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.27.5...v4.28.0) (2021-08-20)
 
 
