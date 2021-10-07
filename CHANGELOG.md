@@ -1,3 +1,10 @@
+## [4.28.2](https://github.com/Greenstand/node-mapnik-1/compare/v4.28.1...v4.28.2) (2021-10-07)
+
+
+### Bug Fixes
+
+* broken workflow ([236bc8d](https://github.com/Greenstand/node-mapnik-1/commit/236bc8d380bcacf636d7b62536eb48ef90ce30fb))
+
 ## [4.28.1](https://github.com/Greenstand/node-mapnik-1/compare/v4.28.0...v4.28.1) (2021-09-02)
 
 
