@@ -1,3 +1,10 @@
+# [4.29.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.28.3...v4.29.0) (2021-10-14)
+
+
+### Features
+
+* move to cloud-services-node-pool ([df6576c](https://github.com/Greenstand/node-mapnik-1/commit/df6576c0a1ce777f07a09e57b4867a9c1095c410))
+
 ## [4.28.3](https://github.com/Greenstand/node-mapnik-1/compare/v4.28.2...v4.28.3) (2021-10-07)
 
 
