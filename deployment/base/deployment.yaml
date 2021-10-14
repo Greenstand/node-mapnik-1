@@ -14,6 +14,15 @@ spec:
       labels:
         app: treetracker-tile-server
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: doks.digitalocean.com/node-pool
+                operator: In
+                values:
+                - cloud-services-node-pool
       containers:
         - name: treetracker-tile-server
           image: greenstand/treetracker-map-tile-server:VERSION
