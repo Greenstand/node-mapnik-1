@@ -100,17 +100,12 @@ function configFreetown(){
 class Config {
   constructor(pool, newIcons = false){
     this.pool = pool;
-    this.newIcons = newIcons;
     const pgPool = new PGPool({
       cacheSize: parseInt(process.env.CACHE_SIZE),
       cacheExpire: parseInt(process.env.CACHE_EXPIRE),
       pool,
     });
     this.pgPool = pgPool;
-  }
-
-  setNewIconXML(showIcons){
-    this.newIcons = showIcons;
   }
 
   async getXMLString(options){
@@ -121,6 +116,7 @@ class Config {
       timeline,
       map_name,
       bounds,
+      newIcons
     } = options;
     const zoomLevelInt = parseInt(zoomLevel);
     const useGeoJson = (
@@ -170,9 +166,9 @@ class Config {
     if(useGeoJson){
       log.info("handle geojson...");
       const xmlJsonTemplate = zoomLevelInt > 15?
-        (this.newIcons ? xmlJsonForTree2 : xmlJsonForTree)
+        (newIcons ? xmlJsonForTree2 : xmlJsonForTree)
         :
-        (this.newIcons ? xmlJson2 : xmlJson);
+        (newIcons ? xmlJson2 : xmlJson);
 
       result = await this.pgPool.getQuery(sql, (result) => {
         log.debug("result:", result);
@@ -199,9 +195,9 @@ class Config {
       log.debug("xml:", result);
     }else{
       const xmlTemplate = zoomLevelInt > 15?
-        (this.newIcons ? xmlTree2: xmlTree)
+        (newIcons ? xmlTree2: xmlTree)
         :
-        (this.newIcons ? xml2 : xml);
+        (newIcons ? xml2 : xml);
       const xmlStringWithDB = replace(xmlTemplate);
       result = xmlStringWithDB.replace(
         "select * from trees",
