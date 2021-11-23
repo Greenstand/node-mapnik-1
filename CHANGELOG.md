@@ -1,3 +1,10 @@
+## [4.29.3](https://github.com/Greenstand/node-mapnik-1/compare/v4.29.2...v4.29.3) (2021-11-23)
+
+
+### Bug Fixes
+
+* failure for new icons ([9284b86](https://github.com/Greenstand/node-mapnik-1/commit/9284b865cfa0fd1ee1d5543cd5aa9517e6068311))
+
 ## [4.29.2](https://github.com/Greenstand/node-mapnik-1/compare/v4.29.1...v4.29.2) (2021-10-20)
 
 
