@@ -209,5 +209,3 @@ To run the tests do:
 BSD, see LICENSE.txt
 
 
-
-  
