@@ -1,3 +1,10 @@
+# [4.30.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.29.4...v4.30.0) (2021-11-27)
+
+
+### Features
+
+* new db secret ([2a3003f](https://github.com/Greenstand/node-mapnik-1/commit/2a3003f8fd165cde6f9a9bf524ea1574449eeaae))
+
 ## [4.29.4](https://github.com/Greenstand/node-mapnik-1/compare/v4.29.3...v4.29.4) (2021-11-27)
 
 
