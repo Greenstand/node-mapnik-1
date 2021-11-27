@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "http://mapnik.org",
   "author": "Dane Springmeyer <dane@mapbox.com> (mapnik.org)",
-  "version": "4.29.3",
+  "version": "4.29.4",
   "mapnik_version": "c3eda40e0",
   "main": "./lib/mapnik.js",
   "binary": {
