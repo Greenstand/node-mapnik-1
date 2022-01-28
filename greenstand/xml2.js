@@ -225,7 +225,7 @@ const xmlJson2 = `
 <Style name="layer1" filter-mode="first" >
   <Rule>
     <PointSymbolizer
-      file="../greenstand/images/cluster_icon.png"
+      file="../greenstand/images/new_cluster.svg"
       opacity="1.0"
       allow-overlap="true"
       ignore-placement="true"
@@ -247,12 +247,14 @@ const xmlJson2 = `
   <Rule>
     <Filter>[count] &lt;= 1000 </Filter>
     <ShieldSymbolizer
-        face-name="Roboto Regular" 
+        face-name="Lato Regular" 
         size="14" 
         fill="black"
-        file="../greenstand/images/cluster_icon.png" 
+        file="../greenstand/images/new_cluster.png" 
         spacing="0" 
         allow-overlap="true"
+        transform="scale(0.33)"
+        shield-dy="-4"
     >
       [count_text]
     </ShieldSymbolizer>
@@ -260,12 +262,14 @@ const xmlJson2 = `
   <Rule>
     <Filter>[count] &gt; 1000 </Filter>
     <ShieldSymbolizer
-        face-name="Roboto Regular" 
+        face-name="Lato Regular" 
         size="14" 
         fill="black"
-        file="../greenstand/images/cluster_icon.png" 
+        file="../greenstand/images/new_cluster.png" 
         spacing="0" 
         allow-overlap="true"
+        transform="scale(0.33)"
+        shield-dy="-4"
     >
       [count_text]
     </ShieldSymbolizer>
