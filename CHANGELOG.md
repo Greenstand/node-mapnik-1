@@ -1,3 +1,10 @@
+# [4.32.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.31.0...v4.32.0) (2022-01-28)
+
+
+### Features
+
+* new icon for cluster ([e690fba](https://github.com/Greenstand/node-mapnik-1/commit/e690fbadba13d42b5b94600c95a27f8fd37af296))
+
 # [4.31.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.30.0...v4.31.0) (2021-11-27)
 
 
