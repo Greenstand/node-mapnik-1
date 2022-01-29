@@ -1,3 +1,10 @@
+## [4.32.2](https://github.com/Greenstand/node-mapnik-1/compare/v4.32.1...v4.32.2) (2022-01-29)
+
+
+### Bug Fixes
+
+* tree icon style 2 ([9c2cdc6](https://github.com/Greenstand/node-mapnik-1/commit/9c2cdc6f7bb01fad5b7c5e9b2847e0df64d5126f))
+
 ## [4.32.1](https://github.com/Greenstand/node-mapnik-1/compare/v4.32.0...v4.32.1) (2022-01-29)
 
 
