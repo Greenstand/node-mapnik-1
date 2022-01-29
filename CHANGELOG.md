@@ -1,3 +1,10 @@
+# [4.33.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.32.3...v4.33.0) (2022-01-29)
+
+
+### Features
+
+* change to icon query ([2241085](https://github.com/Greenstand/node-mapnik-1/commit/224108576a0ad2c485182419184f963ab0e01bfa))
+
 ## [4.32.3](https://github.com/Greenstand/node-mapnik-1/compare/v4.32.2...v4.32.3) (2022-01-29)
 
 
