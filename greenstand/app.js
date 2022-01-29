@@ -6,6 +6,7 @@ const cors = require("cors");
 const { Pool} = require('pg');
 const {Config} = require("./config");
 
+
 const connectionString = process.env.DB_URL;
 const max = process.env.PG_POOL_SIZE && parseInt(process.env.PG_POOL_SIZE) || 10;
 log.info("pool settings:db:%s; pool size: %d", connectionString, max);
