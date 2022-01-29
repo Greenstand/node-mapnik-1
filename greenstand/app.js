@@ -100,7 +100,7 @@ app.get("/:z/:x/:y.png", async (req, res) => {
 try{
   const {x,y,z} = req.params;
   const begin = Date.now();
-  const map = await buildMapInstance(x, y, z, {...req.query, newIcons: false});
+  const map = await buildMapInstance(x, y, z, {...req.query});
   log.info("Build map took:", Date.now() - begin, x,y,z,".png");
   const begin2 = Date.now();
   const im = new mapnik.Image(256, 256);
@@ -126,7 +126,7 @@ app.get("/:z/:x/:y.grid.json", async (req, res) => {
 try{
   const {x,y,z} = req.params;
   const begin = Date.now();
-  const map = await buildMapInstance(x, y, z, {...req.query, newIcons: false});
+  const map = await buildMapInstance(x, y, z, {...req.query});
   log.info("Build map took:", Date.now() - begin, x,y,z,".grid");
   const begin2 = Date.now();
   var grid = new mapnik.Grid(256, 256);

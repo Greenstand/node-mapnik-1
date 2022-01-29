@@ -193,6 +193,8 @@ const xmlTree2 =`
 </Map>
 `;
 
+const xmlTree3 = xmlTree2.replace(/transform="scale\(0.33\)"/, 'transform="scale(0.27)"');
+
 const xmlJson2 = `
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE Map[]>
@@ -303,6 +305,10 @@ const xmlJson2 = `
 </Map>
 `;
 
+const xmlJson3 = xmlJson2.replace(/transform="scale\(0.33\)"/g, 'transform="scale(0.27)"')
+  .replace(/shield-dy="-4"/g, 'shield-dy="-2"')
+  .replace(/size="14"/g, 'size="12"');
+
 const xmlJsonForTree2 = `
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE Map[]>
@@ -363,6 +369,8 @@ const xmlJsonForTree2 = `
 module.exports = {
   xml2,
   xmlTree2,
+  xmlTree3,
   xmlJson2,
+  xmlJson3,
   xmlJsonForTree2,
 }
