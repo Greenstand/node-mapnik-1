@@ -1,7 +1,7 @@
 const path = require("path");
 const fs = require("fs");
 const {xml, xmlTree, xmlJson, xmlJsonForTree} = require("./xml");
-const {xml2, xmlTree2, xmlJson2, xmlJsonForTree2} = require("./xml2");
+const {xml2, xmlTree2, xmlTree3, xmlJson2, xmlJson3, xmlJsonForTree2} = require("./xml2");
 const Map = require("./Map");
 const log = require("loglevel");
 const PGPool = require("./PGPool");
@@ -116,7 +116,7 @@ class Config {
       timeline,
       map_name,
       bounds,
-      newIcons
+      icon,
     } = options;
     const zoomLevelInt = parseInt(zoomLevel);
     const useGeoJson = (
@@ -162,13 +162,86 @@ class Config {
 
     let result;
 
+    //icon: 
+    //  o|undefined    : the old organge icon
+    //  ptk-b            : the green one designed by patrick
+    //  ptk-s          : the green small one
+    function getXML(options){
+      let result;
+      const {icon, json, tree} = options;
+      switch(json){
+        case true:
+            switch(tree){
+              case true:
+                switch(icon){
+                  case 'ptk-b':
+                    result = xmlJsonForTree2;
+                    break;
+                  case 'o':
+                  default:
+                    result = xmlJsonForTree;
+                }
+                break;
+              case false:
+                switch(icon){
+                  case 'ptk-b':
+                    result = xmlJson2;
+                    break;
+                  case 'ptk-s':
+                    result = xmlJson3;
+                    break;
+                  case 'o':
+                  default:
+                    result = xmlJson;
+                }
+                break;
+              default:
+                throw new Error('wrong tree value:' + tree);
+            }
+          break;
+        case false:
+            switch(tree){
+              case true:
+                switch(icon){
+                  case 'ptk-b':
+                    result = xmlTree2;
+                    break;
+                  case 'ptk-s':
+                    result = xmlTree3;
+                    break;
+                  case 'o':
+                  default:
+                    result = xmlTree;
+                }
+                break;
+              case false:
+                switch(icon){
+                  case 'ptk-b':
+                    result = xml2;
+                    break;
+                  case 'o':
+                  default:
+                    result = xml;
+                }
+                break;
+              default:
+                throw new Error('wrong tree value:' + tree);
+            }
+          break;
+        default:
+          throw Error('wrong json value: ' + json);
+      }
+      log.info(icon, json, tree, ':resolve xml:', result);
+      return result;
+    }
+
     //handle geojson case
     if(useGeoJson){
       log.info("handle geojson...");
       const xmlJsonTemplate = zoomLevelInt > 15?
-        (newIcons ? xmlJsonForTree2 : xmlJsonForTree)
+        getXML({icon, json:true, tree: true})
         :
-        (newIcons ? xmlJson2 : xmlJson);
+        getXML({icon, json:true, tree: false});
 
       result = await this.pgPool.getQuery(sql, (result) => {
         log.debug("result:", result);
@@ -195,9 +268,9 @@ class Config {
       log.debug("xml:", result);
     }else{
       const xmlTemplate = zoomLevelInt > 15?
-        (newIcons ? xmlTree2: xmlTree)
+        getXML({icon, json:false, tree: true})
         :
-        (newIcons ? xml2 : xml);
+        getXML({icon, json:false, tree: false});
       const xmlStringWithDB = replace(xmlTemplate);
       result = xmlStringWithDB.replace(
         "select * from trees",
