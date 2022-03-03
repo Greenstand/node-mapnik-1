@@ -62,7 +62,10 @@
   utfGridLayer.on('mouseover', function (e) {
     console.log("over e:", e);
     const [lon, lat] = JSON.parse(e.data.latlon).coordinates;
-    marker = L.marker([lat, lon],{
+    const {lng: cursorLng, lat: cursorLat} = e.latlng;
+    const revolutions = Math.round((cursorLng - lon) / 360)
+    const calculatedLon = lon + (revolutions * 360)
+    marker = L.marker([lat, calculatedLon],{
       icon: myIcon,
     });
     marker.addTo(mymap);
