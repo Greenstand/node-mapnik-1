@@ -305,7 +305,7 @@ const xmlJson2 = `
 </Map>
 `;
 
-const xmlJson3 = xmlJson2.replace(/transform="scale\(1\)"/g, 'transform="scale(0.27)"')
+const xmlJson3 = xmlJson2.replace(/transform="scale\(1\)"/g, 'transform="scale(0.81)"')
   .replace(/shield-dy="-4"/g, 'shield-dy="-2"')
   .replace(/size="14"/g, 'size="12"');
 
