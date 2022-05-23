@@ -1,3 +1,10 @@
+## [4.33.1](https://github.com/Greenstand/node-mapnik-1/compare/v4.33.0...v4.33.1) (2022-05-23)
+
+
+### Bug Fixes
+
+* trigger deploy ([64015f2](https://github.com/Greenstand/node-mapnik-1/commit/64015f290274e820cedcd1131ee85f794700eb9c))
+
 # [4.33.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.32.3...v4.33.0) (2022-01-29)
 
 
