@@ -31,7 +31,7 @@ const xml2 =`
 <Style name="layer1" filter-mode="first" >
   <Rule>
     <PointSymbolizer
-      file="../greenstand/images/cluster_icon.png"
+      file="../greenstand/images/original_size_shadowless.png"
       opacity="1.0"
       allow-overlap="true"
       ignore-placement="true"
@@ -56,7 +56,7 @@ const xml2 =`
         face-name="Roboto Regular" 
         size="14" 
         fill="black"
-        file="../greenstand/images/cluster_icon.png" 
+        file="../greenstand/images/original_size_shadowless.png" 
         spacing="0" 
         allow-overlap="true"
     >
@@ -69,7 +69,7 @@ const xml2 =`
         face-name="Roboto Regular" 
         size="14" 
         fill="black"
-        file="../greenstand/images/cluster_icon.png" 
+        file="../greenstand/images/original_size_shadowless.png" 
         spacing="0" 
         allow-overlap="true"
     >
@@ -228,7 +228,7 @@ const xmlJson2 = `
 <Style name="layer1" filter-mode="first" >
   <Rule>
     <PointSymbolizer
-      file="../greenstand/images/new_cluster.svg"
+      file="../greenstand/images/original_size_shadowless.svg"
       opacity="1.0"
       allow-overlap="true"
       ignore-placement="true"
@@ -253,10 +253,10 @@ const xmlJson2 = `
         face-name="Lato Regular" 
         size="14" 
         fill="black"
-        file="../greenstand/images/new_cluster.png" 
+        file="../greenstand/images/original_size_shadowless.png" 
         spacing="0" 
         allow-overlap="true"
-        transform="scale(0.33)"
+        transform="scale(1)"
         shield-dy="-4"
     >
       [count_text]
@@ -268,10 +268,10 @@ const xmlJson2 = `
         face-name="Lato Regular" 
         size="14" 
         fill="black"
-        file="../greenstand/images/new_cluster.png" 
+        file="../greenstand/images/original_size_shadowless.png" 
         spacing="0" 
         allow-overlap="true"
-        transform="scale(0.33)"
+        transform="scale(1)"
         shield-dy="-4"
     >
       [count_text]
@@ -305,7 +305,7 @@ const xmlJson2 = `
 </Map>
 `;
 
-const xmlJson3 = xmlJson2.replace(/transform="scale\(0.33\)"/g, 'transform="scale(0.27)"')
+const xmlJson3 = xmlJson2.replace(/transform="scale\(1\)"/g, 'transform="scale(0.81)"')
   .replace(/shield-dy="-4"/g, 'shield-dy="-2"')
   .replace(/size="14"/g, 'size="12"');
 
