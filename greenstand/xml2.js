@@ -157,11 +157,11 @@ const xmlTree2 =`
 <Style name="layer0" filter-mode="first" >
   <Rule>
     <PointSymbolizer
-      file="../greenstand/images/trees.png"
+      file="../greenstand/images/tree_new.png"
       opacity="1.0"
       allow-overlap="true"
       ignore-placement="true"
-      transform="scale(0.33)"
+      transform="scale(1)"
       />
     <!--
     <MarkersSymbolizer fill="#ff6600" opacity="1" width="16" stroke="#ffffff" stroke-width="3" stroke-opacity="0.9" placement="point" marker-type="ellipse" allow-overlap="true" clip="true" />
