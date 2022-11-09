@@ -30,7 +30,7 @@ class SQLCase1V2 extends SQLCase1 {
                   )
               UNION
                 select id from trees where planting_organization_id = (
-                select id from entity where map_name = 'freetown'
+                select id from entity where map_name = '${this.mapName}'
                 )
               ) idsx
 
