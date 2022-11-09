@@ -1,3 +1,10 @@
+## [4.35.1](https://github.com/Greenstand/node-mapnik-1/compare/v4.35.0...v4.35.1) (2022-11-09)
+
+
+### Bug Fixes
+
+* bug hardcode ([66fba15](https://github.com/Greenstand/node-mapnik-1/commit/66fba1550de331e43f23faeaab3d5a7f2f1f1af3))
+
 # [4.35.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.34.0...v4.35.0) (2022-11-09)
 
 
