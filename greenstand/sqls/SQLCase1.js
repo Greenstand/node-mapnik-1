@@ -2,67 +2,67 @@
  * Case1, search DB via active_tree_region table,
  */
 
-class SQLCase1{
+class SQLCase1 {
 
-  constructor(){
+  constructor() {
     this.isFilteringByUserId = false;
     this.userId = undefined;
   }
 
-  addFilterByUserId(userId){
+  addFilterByUserId(userId) {
     this.isFilteringByUserId = true;
     this.userId = userId;
   }
 
-  addFilterByWallet(wallet){
+  addFilterByWallet(wallet) {
     this.wallet = wallet;
   }
 
-  getJoin(){
+  getJoin() {
     let result = "";
-    if(this.isFilteringByUserId || this.wallet){
+    if (this.isFilteringByUserId || this.wallet) {
       result += "JOIN trees ON tree_region.tree_id = trees.id\n";
     }
-    if(this.mapName){
+    if (this.mapName) {
       result += "INNER JOIN org_tree_id ON org_tree_id.id = tree_region.tree_id\n";
     }
-    if(this.wallet){
+    if (this.wallet) {
       result += 'INNER JOIN wallet.token ON wallet.token.capture_id::text = trees.uuid \n';
       result += 'INNER JOIN wallet.wallet ON wallet.wallet.id = wallet.token.wallet_id \n';
     }
     return result;
   }
 
-  getFilter(){
+  getFilter() {
     let result = "";
-    if(this.isFilteringByUserId){
+    if (this.isFilteringByUserId) {
       result += "AND planter_id = " + this.userId + " ";
     }
-    if(this.treeIds && this.treeIds.length > 0){
+    if (this.treeIds && this.treeIds.length > 0) {
       result += "AND tree_region.tree_id IN(" + this.treeIds.join(",") + ") ";
     }
-    if(this.wallet) {
+    if (this.wallet) {
       result += "AND wallet.wallet.name = '" + this.wallet + "'"
     }
     return result;
   }
 
-  setZoomLevel(zoomLevel){
+  setZoomLevel(zoomLevel) {
     this.zoomLevel = zoomLevel;
   }
 
-  getZoomLevel(){
-    if(!this.zoomLevel){
+  getZoomLevel() {
+    if (!this.zoomLevel) {
       throw new Error("zoom level required");
     }
     return this.zoomLevel;
   }
 
-  setBounds(bounds){
+  setBounds(bounds) {
     this.bounds = bounds;
   }
 
-  getBoundingBoxQuery(){
+  getBoundingBoxQuery() {
     let result = "";
     if (this.bounds) {
       result += ' AND centroid && ST_MakeEnvelope(' + this.bounds + ', 4326) \n';
@@ -70,16 +70,16 @@ class SQLCase1{
     return result;
   }
 
-  addMapNameFilter(mapName){
+  addMapNameFilter(mapName) {
     this.mapName = mapName;
   }
 
   /*
    * The with cause
    */
-  getWith(){
+  getWith() {
     let withClause = `WITH placeholder AS (SELECT 1)`;
-    if(this.mapName){
+    if (this.mapName) {
       //replace the withClause 
       withClause = `
         WITH RECURSIVE organization_children AS (
@@ -94,21 +94,28 @@ class SQLCase1{
            JOIN organization_children c ON entity_relationship.parent_id = c.id
           )
             ,org_tree_id AS (
-            SELECT trees.id as id from trees
-              INNER JOIN (
-                SELECT id FROM planter
-                JOIN (
-                  SELECT id AS entity_id FROM organization_children LIMIT 20
-                ) org ON planter.organization_id = org.entity_id
-              ) planter_ids
-              ON trees.planter_id = planter_ids.id
+              SELECT id FROM (
+              SELECT trees.id as id from trees
+                WHERE 
+                  planter_id IN (
+                    SELECT id FROM planter
+                    JOIN (
+                      SELECT id AS entity_id FROM organization_children LIMIT 20
+                    ) org ON planter.organization_id = org.entity_id
+                  )
+              UNION
+                select id from trees where planting_organization_id = (
+                select id from entity where map_name = '${this.mapName}'
+                )
+              ) ids
+
             )
      	`;
     }
     return withClause;
   }
 
-  getQuery(options = {}){
+  getQuery(options = {}) {
     //TODO check the conflict case, like: can not set userid and treeIds at the same time
     const text = `
       /* sql case1 tile */
@@ -118,10 +125,10 @@ class SQLCase1{
       'case1 tile' AS log,
       NULL AS zoom_to,
       region_id id, 
-      ${this.getZoomLevel() === 2?
-      "st_point(LEAST(st_x(centroid), 170), st_y(centroid)) estimated_geometric_location,St_asgeojson(st_point(LEAST(st_x(centroid), 170), st_y(centroid))) latlon,"
+      ${this.getZoomLevel() === 2 ?
+        "st_point(LEAST(st_x(centroid), 170), st_y(centroid)) estimated_geometric_location,St_asgeojson(st_point(LEAST(st_x(centroid), 170), st_y(centroid))) latlon,"
         :
-      "centroid estimated_geometric_location,St_asgeojson(centroid) latlon,"
+        "centroid estimated_geometric_location,St_asgeojson(centroid) latlon,"
       }
       type_id as region_type,
       count(tree_region.id) count,

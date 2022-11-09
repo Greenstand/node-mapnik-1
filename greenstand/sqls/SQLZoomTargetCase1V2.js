@@ -4,24 +4,24 @@
  */
 const SQLZoomTargetCase1 = require("./SQLZoomTargetCase1");
 
-class SQLZoomTargetCase1V2 extends SQLZoomTargetCase1{
+class SQLZoomTargetCase1V2 extends SQLZoomTargetCase1 {
 
-  constructor(){
+  constructor() {
     super();
   }
 
-  addMapNameFilter(mapName){
+  addMapNameFilter(mapName) {
     this.mapName = mapName;
   }
 
-  setTreeIds(){
+  setTreeIds() {
     throw new Error("dedicated");
   }
 
 
-  getFilter(){
+  getFilter() {
     let result = "";
-    if(this.mapName){
+    if (this.mapName) {
       result += `
         AND active_tree_region.tree_id IN(
           select distinct * from ( 
@@ -46,13 +46,17 @@ class SQLZoomTargetCase1V2 extends SQLZoomTargetCase1{
                 ) org ON planter.organization_id = org.entity_id
               ) planter_ids
               ON trees.planter_id = planter_ids.id
+          UNION ALL
+            select id from trees where planting_organization_id = (
+                select id from entity where map_name = '${this.mapName}'
+            )
           ) t1
         )`;
     }
     return result;
   }
 
-  addTreesFilter(){
+  addTreesFilter() {
     throw new Error("dedicated");
   }
 

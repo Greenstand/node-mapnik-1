@@ -4,37 +4,43 @@
  */
 const SQLCase1 = require("./SQLCase1");
 
-class SQLCase1V2 extends SQLCase1{
+class SQLCase1V2 extends SQLCase1 {
 
-  constructor(){
+  constructor() {
     super();
   }
 
-  getJoin(){
+  getJoin() {
     let result = "";
-    if(this.isFilteringByUserId){
+    if (this.isFilteringByUserId) {
       result += "JOIN trees ON tree_region.tree_id = trees.id";
     }
-    if(this.mapName){
+    if (this.mapName) {
       result += `
         INNER JOIN
-        (  select trees.id as org_tree_id from trees
-          INNER JOIN (
-            SELECT id FROM planter
-            JOIN (
-              SELECT entity_id FROM getEntityRelationshipChildren(
-                (SELECT id FROM entity WHERE map_name = '${this.mapName}')
-              )
-            ) org ON planter.organization_id = org.entity_id
-          ) planter_ids
-          ON trees.planter_id = planter_ids.id
+        (  
+            SELECT id as org_tree_id FROM (
+              SELECT trees.id as id from trees
+                WHERE 
+                  planter_id IN (
+                    SELECT id FROM planter
+                    JOIN (
+                      SELECT id AS entity_id FROM organization_children LIMIT 20
+                    ) org ON planter.organization_id = org.entity_id
+                  )
+              UNION
+                select id from trees where planting_organization_id = (
+                select id from entity where map_name = 'freetown'
+                )
+              ) idsx
+
         ) tree_ids
         ON tree_region.tree_id = tree_ids.org_tree_id`;
     }
     return result;
   }
 
-  addMapNameFilter(mapName){
+  addMapNameFilter(mapName) {
     this.mapName = mapName;
   }
 

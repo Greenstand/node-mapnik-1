@@ -2,101 +2,101 @@
  * Case3, to filter and count all stuff via trees table directly, it would be slow if the data set is huge
  */
 
-class SQLCase3{
+class SQLCase3 {
 
-  constructor(){
+  constructor() {
     this.isFilteringByUserId = false;
     this.userId = undefined;
   }
 
 
-  setZoomLevel(zoomLevel){
+  setZoomLevel(zoomLevel) {
     this.zoomLevel = zoomLevel;
   }
 
-  getZoomLevel(){
+  getZoomLevel() {
     return this.zoomLevel;
   }
 
-  getClusterRadius(){
+  getClusterRadius() {
     //calculate cluster radius by zoom level
     parseInt(this.zoomLevel)
-      switch (this.zoomLevel) {
-            case 1:
-                return 10;
-              case 2:
-                return 8;
-              case 3:
-                return 6;
-              case 4:
-                return 4;
-              case 5:
-                return 0.8;
-              case 6:
-                return 0.75;
-              case 7:
-                return 0.3;
-              case 8:
-                return 0.099;
-              case 9:
-                return 0.095;
-              case 10:
-                return 0.05;
-              case 11:
-                return 0.03;
-              case 12:
-                return 0.02;
-              case 13:
-                return 0.008;
-              case 14:
-                return 0.005;
-              case 15:
-                return 0.004;
-              case 16:
-                return 0.003;
-              case 17:
-              case 18:
-              case 19:
-                return 0.0;
-              default:
-                return 0;
-            }
+    switch (this.zoomLevel) {
+      case 1:
+        return 10;
+      case 2:
+        return 8;
+      case 3:
+        return 6;
+      case 4:
+        return 4;
+      case 5:
+        return 0.8;
+      case 6:
+        return 0.75;
+      case 7:
+        return 0.3;
+      case 8:
+        return 0.099;
+      case 9:
+        return 0.095;
+      case 10:
+        return 0.05;
+      case 11:
+        return 0.03;
+      case 12:
+        return 0.02;
+      case 13:
+        return 0.008;
+      case 14:
+        return 0.005;
+      case 15:
+        return 0.004;
+      case 16:
+        return 0.003;
+      case 17:
+      case 18:
+      case 19:
+        return 0.0;
+      default:
+        return 0;
+    }
   }
 
-  addFilterByUserid(userid){
+  addFilterByUserid(userid) {
     this.userid = userid;
   }
 
-  addFilterByWallet(wallet){
+  addFilterByWallet(wallet) {
     this.wallet = wallet;
   }
 
-  addFilterByFlavor(flavor){
+  addFilterByFlavor(flavor) {
     this.flavor = flavor;
   }
 
-  addFilterByToken(token){
+  addFilterByToken(token) {
     this.token = token;
   }
 
-  addFilterByMapName(mapName){
+  addFilterByMapName(mapName) {
     this.mapName = mapName;
   }
 
-  getFilter(){
+  getFilter() {
     let result = "";
-    if(this.userid){
+    if (this.userid) {
       result += 'AND trees.planter_id = ' + this.userid + ' ';
     }
-    if(this.wallet) {
+    if (this.wallet) {
       result += "AND wallet.wallet.name = '" + this.wallet + "'"
     }
     return result;
   }
 
-  getWith(){
+  getWith() {
     let withClause = `WITH placeholder AS (SELECT 1)`;
-    if(this.mapName){
+    if (this.mapName) {
       //replace the withClause 
       withClause = `
         WITH RECURSIVE organization_children AS (
@@ -111,51 +111,57 @@ class SQLCase3{
            JOIN organization_children c ON entity_relationship.parent_id = c.id
           )
             ,org_tree_id AS (
-            SELECT trees.id as id from trees
-              INNER JOIN (
-                SELECT id FROM planter
-                JOIN (
-                  SELECT id AS entity_id FROM organization_children LIMIT 20
-                ) org ON planter.organization_id = org.entity_id
-              ) planter_ids
-              ON trees.planter_id = planter_ids.id
+              SELECT id FROM (
+                SELECT trees.id as id from trees
+                  WHERE 
+                    planter_id IN (
+                      SELECT id FROM planter
+                      JOIN (
+                        SELECT id AS entity_id FROM organization_children LIMIT 20
+                      ) org ON planter.organization_id = org.entity_id
+                    )
+                UNION
+                  select id from trees where planting_organization_id = (
+                  select id from entity where map_name = '${this.mapName}'
+                  )
+                ) ids
             )
      	`;
     }
     return withClause;
   }
 
-  getJoin(){
+  getJoin() {
     let result = "";
-    if(this.wallet){
+    if (this.wallet) {
       result += 'INNER JOIN wallet.token ON wallet.token.capture_id::text = trees.uuid \n';
       result += 'INNER JOIN wallet.wallet ON wallet.wallet.id = wallet.token.wallet_id \n';
     }
-    if(this.flavor){
+    if (this.flavor) {
       result += "INNER JOIN tree_attributes ON tree_attributes.tree_id = trees.id";
     }
-    if(this.token){
+    if (this.token) {
       result += "INNER JOIN certificates ON trees.certificate_id = certificates.id AND certificates.token = '" + this.token + "'";
     }
-    if(this.mapName){
+    if (this.mapName) {
       result += "INNER JOIN org_tree_id ON org_tree_id.id = trees.id";
     }
     return result;
   }
 
-  getJoinCriteria(){
+  getJoinCriteria() {
     let result = "";
-    if(this.flavor){
+    if (this.flavor) {
       result += "AND tree_attributes.key = 'app_flavor' AND tree_attributes.value = '" + this.flavor + "'";
     }
     return result;
   }
 
-  setBounds(bounds){
+  setBounds(bounds) {
     this.bounds = bounds;
   }
 
-  getBoundingBoxQuery(){
+  getBoundingBoxQuery() {
     let result = "";
     if (this.bounds) {
       result += 'AND trees.estimated_geometric_location && ST_MakeEnvelope(' + this.bounds + ', 4326) ';
@@ -163,9 +169,9 @@ class SQLCase3{
     return result;
   }
 
-  getQuery(){
+  getQuery() {
     console.log('Calculating clusters directly');
-    const query =  `
+    const query = `
         /* case3 tile */
         ${this.getWith()}
         SELECT 'cluster'                                           AS type,
