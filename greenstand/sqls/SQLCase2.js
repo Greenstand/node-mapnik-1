@@ -5,67 +5,75 @@
 
 
 
-class SQLCase2{
-  
+class SQLCase2 {
 
-  addTreeFilter(treeid){
+
+  addTreeFilter(treeid) {
     this.treeid = treeid;
   }
 
-  addUUIDFilter(uuid){
+  addUUIDFilter(uuid) {
     this.uuid = uuid;
   }
 
 
-  addTreesFilter(){
+  addTreesFilter() {
     throw new Error("dedicated");
   }
 
-  addFilterByUserId(userId){
+  addFilterByUserId(userId) {
     this.userId = userId;
   }
 
-  addFilterByWallet(wallet){
+  addFilterByWallet(wallet) {
     this.wallet = wallet;
   }
 
-  addFilterByFlavor(flavor){
+  addFilterByFlavor(flavor) {
     this.flavor = flavor;
   }
 
-  addFilterByToken(token){
+  addFilterByToken(token) {
     this.token = token;
   }
 
-  addFilterByMapName(mapName){
+  addFilterByMapName(mapName) {
     this.mapName = mapName;
   }
 
-  getFilter(){
+  getFilter() {
     let result = "";
-    if(this.treeid){
+    if (this.treeid) {
       result += 'AND trees.id = ' + this.treeid + ' \n';
     }
-    if(this.uuid){
+    if (this.uuid) {
       result += 'AND trees.uuid = ' + this.uuid + ' \n';
     }
-    if(this.userId){
+    if (this.userId) {
       result += "AND trees.planter_id = " + this.userId + " \n";
     }
-    if(this.wallet) {
+    if (this.wallet) {
       result += "AND wallet.wallet.name = '" + this.wallet + "'\n"
     }
-		if(this.mapName){
-			result += "AND trees.planter_id IN (SELECT id FROM planter_in_org)\n";
-		}
+    if (this.mapName) {
+      result += `
+          AND (
+              trees.planter_id IN (SELECT id FROM planter_in_org)
+            OR
+              trees.planting_organization_id = (
+                select id from entity where map_name = '${this.mapName}'
+              )
+          )
+      `;
+    }
     return result;
   }
 
-  setBounds(bounds){
+  setBounds(bounds) {
     this.bounds = bounds;
   }
 
-  getBoundingBoxQuery(){
+  getBoundingBoxQuery() {
     let result = "";
     if (this.bounds) {
       result += 'AND trees.estimated_geometric_location && ST_MakeEnvelope(' + this.bounds + ', 4326) ';
@@ -73,32 +81,32 @@ class SQLCase2{
     return result;
   }
 
-  getJoinCriteria(){
+  getJoinCriteria() {
     let result = "";
-    if(this.flavor){
+    if (this.flavor) {
       result += "AND tree_attributes.key = 'app_flavor' AND tree_attributes.value = '" + this.flavor + "'";
     }
-    if(this.token){
+    if (this.token) {
       result += "INNER JOIN certificates ON trees.certificate_id = certificates.id AND certificates.token = '" + this.token + "'";
     }
     return result;
   }
 
-  getJoin(){
+  getJoin() {
     let result = "";
-    if(this.wallet){
+    if (this.wallet) {
       result += 'INNER JOIN wallet.token ON wallet.token.capture_id::text = trees.uuid \n';
       result += 'INNER JOIN wallet.wallet ON wallet.wallet.id = wallet.token.wallet_id \n';
     }
-    if(this.flavor){
+    if (this.flavor) {
       result += "INNER JOIN tree_attributes ON tree_attributes.tree_id = trees.id";
     }
     return result;
   }
 
-  getWith(){
+  getWith() {
     let withClause = `WITH placeholder AS (SELECT 1)`;
-    if(this.mapName){
+    if (this.mapName) {
       //replace the withClause 
       withClause = `
 WITH RECURSIVE organization_children AS (
@@ -123,7 +131,7 @@ WITH RECURSIVE organization_children AS (
     return withClause;
   }
 
-  getQuery(){
+  getQuery() {
     let sql = `
       /* sql case2 tile */
       ${this.getWith()}
@@ -144,8 +152,8 @@ WITH RECURSIVE organization_children AS (
       ${this.getFilter()}
       ${this.getJoinCriteria()}
       ORDER BY ID DESC
-    ` 
-    ;
+    `
+      ;
     console.log(sql);
     return sql;
   }
