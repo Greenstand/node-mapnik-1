@@ -1,3 +1,10 @@
+## [4.35.2](https://github.com/Greenstand/node-mapnik-1/compare/v4.35.1...v4.35.2) (2022-11-25)
+
+
+### Bug Fixes
+
+* ffcphase1 case ([8933779](https://github.com/Greenstand/node-mapnik-1/commit/89337794d251aa374a6527e2b082cde01f783998))
+
 ## [4.35.1](https://github.com/Greenstand/node-mapnik-1/compare/v4.35.0...v4.35.1) (2022-11-09)
 
 
