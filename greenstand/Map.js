@@ -110,7 +110,7 @@ class Map{
         this.sql = new SQLCase2();
         this.sql.addFilterByMapName(this.mapName);
         this.sql.setBounds(this.bounds);
-      } else if ([12, 13, 14, 15].includes(this.zoomLevel) && this.mapName != 'freetown') {
+      } else if ([12, 13, 14, 15].includes(this.zoomLevel) && this.mapName != 'freetown' && this.mapName != 'ffcphase1' ) {
         this.sql = new SQLCase3();
         this.sql.setZoomLevel(this.zoomLevel);
         this.sql.addFilterByMapName(this.mapName);
