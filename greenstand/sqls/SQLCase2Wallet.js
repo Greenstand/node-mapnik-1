@@ -69,7 +69,7 @@ class SQLCase2Wallet extends SQLCase2{
         NULL AS zoom_to,
         1 as count
         FROM trees 
-        JOIN wallet."token" t ON t.capture_id::TEXT = trees.uuid
+        JOIN wallet."token" t ON t.capture_id::TEXT = lower(trees.uuid)
         ${this.getJoin()}
         WHERE active = true 
         ${this.getBoundingBoxQuery()}
