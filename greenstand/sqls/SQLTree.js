@@ -25,7 +25,7 @@ class SQLTree{
         ON planter.id = trees.planter_id
         LEFT JOIN tree_species ON
           trees.species_id = tree_species.id
-        LEFT JOIN wallet.token token ON token.capture_id::text = trees.uuid
+        LEFT JOIN wallet.token token ON token.capture_id::text = lower(trees.uuid)
         LEFT JOIN wallet.wallet wallet ON wallet.id = token.wallet_id 
         WHERE
           trees.id = $1 AND trees.active = true
@@ -60,7 +60,7 @@ class SQLTree{
         ON planter.id = trees.planter_id
         LEFT JOIN tree_species ON
           trees.species_id = tree_species.id
-        LEFT JOIN wallet.token token ON token.capture_id::text = trees.uuid
+        LEFT JOIN wallet.token token ON token.capture_id::text = lower(trees.uuid)
         LEFT JOIN wallet.wallet wallet ON wallet.id = token.wallet_id 
         WHERE
           trees.uuid = $1 AND trees.active = true

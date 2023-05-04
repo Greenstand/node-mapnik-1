@@ -27,7 +27,7 @@ class SQLCase1 {
       result += "INNER JOIN org_tree_id ON org_tree_id.id = tree_region.tree_id\n";
     }
     if (this.wallet) {
-      result += 'INNER JOIN wallet.token ON wallet.token.capture_id::text = trees.uuid \n';
+      result += 'INNER JOIN wallet.token ON wallet.token.capture_id::text = lower(trees.uuid) \n';
       result += 'INNER JOIN wallet.wallet ON wallet.wallet.id = wallet.token.wallet_id \n';
     }
     return result;
