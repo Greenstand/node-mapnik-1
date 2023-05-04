@@ -1,3 +1,11 @@
+## [4.35.3](https://github.com/Greenstand/node-mapnik-1/compare/v4.35.2...v4.35.3) (2023-05-04)
+
+
+### Bug Fixes
+
+* node 14 -> 18 in CI ([dc6ccc4](https://github.com/Greenstand/node-mapnik-1/commit/dc6ccc4796a713a306f9bed49df01b1012ce3646))
+* uuid to tolerate capital ([5a9317e](https://github.com/Greenstand/node-mapnik-1/commit/5a9317ebcc8dc11ae9b2f828cef9102bd9c7d305))
+
 ## [4.35.2](https://github.com/Greenstand/node-mapnik-1/compare/v4.35.1...v4.35.2) (2022-11-25)
 
 
