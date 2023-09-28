@@ -1,3 +1,10 @@
+# [4.36.0-next.2](https://github.com/Greenstand/node-mapnik-1/compare/v4.36.0-next.1...v4.36.0-next.2) (2023-09-28)
+
+
+### Bug Fixes
+
+* k8s deployment ([60eb77c](https://github.com/Greenstand/node-mapnik-1/commit/60eb77ce932cff5a50968ccc88282afb4e7be1ac))
+
 # [4.36.0-next.1](https://github.com/Greenstand/node-mapnik-1/compare/v4.35.3...v4.36.0-next.1) (2023-09-28)
 
 
