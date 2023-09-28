@@ -1,3 +1,10 @@
+# [4.36.0-next.1](https://github.com/Greenstand/node-mapnik-1/compare/v4.35.3...v4.36.0-next.1) (2023-09-28)
+
+
+### Features
+
+* next channel deployment ([552d151](https://github.com/Greenstand/node-mapnik-1/commit/552d151bb87ddfc4a1e13ac857be52144dff10e1))
+
 ## [4.35.3](https://github.com/Greenstand/node-mapnik-1/compare/v4.35.2...v4.35.3) (2023-05-04)
 
 
