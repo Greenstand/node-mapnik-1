@@ -37,4 +37,4 @@ jobs:
       - name: Save DigitalOcean kubeconfig
         run: doctl kubernetes cluster kubeconfig save ${{ secrets.TEST_CLUSTER_NAME }}
       - name: Update kubernetes resources
-        run: kustomize build deployment-next/overlays/development | kubectl apply -n tile-server --wait -f -
+        run: kustomize build deployment-next/overlays/development | kubectl apply -n tile-server-next --wait -f -
