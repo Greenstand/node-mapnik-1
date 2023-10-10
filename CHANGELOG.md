@@ -1,3 +1,10 @@
+# [4.36.0-next.3](https://github.com/Greenstand/node-mapnik-1/compare/v4.36.0-next.2...v4.36.0-next.3) (2023-10-10)
+
+
+### Bug Fixes
+
+* sealed db url ([30f742b](https://github.com/Greenstand/node-mapnik-1/commit/30f742b18b8420c6d6c5c712804db68914c63626))
+
 # [4.36.0-next.2](https://github.com/Greenstand/node-mapnik-1/compare/v4.36.0-next.1...v4.36.0-next.2) (2023-09-28)
 
 
