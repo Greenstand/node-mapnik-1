@@ -1,3 +1,10 @@
+## [4.36.1](https://github.com/Greenstand/node-mapnik-1/compare/v4.36.0...v4.36.1) (2023-11-27)
+
+
+### Bug Fixes
+
+* scale down node ([9609577](https://github.com/Greenstand/node-mapnik-1/commit/9609577480ff01158f317f4480540a80d727d6f4))
+
 # [4.36.0](https://github.com/Greenstand/node-mapnik-1/compare/v4.35.3...v4.36.0) (2023-09-28)
 
 
