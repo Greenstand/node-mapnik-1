@@ -41,13 +41,18 @@ class PGPool{
         const resultHandled = handleResult? handleResult(result):result;
         while(this.queue[sql].length > 0){
           const cb = this.queue[sql].pop();
-          cb(resultHandled);
+          cb(null, resultHandled);
         }
         this.cache.set(sql,resultHandled);
         this.isFetching[sql] = false;
         log.warn("fetch finished");
       }).catch(e => {
         log.error("get error when query db:", e);
+        this.isFetching[sql] = false;
+        while(this.queue[sql] && this.queue[sql].length > 0){
+          const cb = this.queue[sql].pop();
+          cb(e, null);
+        }
       });
     }
   }
@@ -65,8 +70,9 @@ class PGPool{
         log.warn("cache bingo!");
         res(value);
       }else{
-        this.fetch(sql, handleResult, (result)=>{
+        this.fetch(sql, handleResult, (err, result)=>{
           log.warn("fetch callback");
+          if(err) return rej(err);
           res(result);
         });
       }

@@ -68,7 +68,7 @@ async function buildMapInstance(x, y, z, params){
     },function(err,_map) {
       if(err){
         log.error("e when fromString:", err);
-        throw "failed";
+        return rej(err);
       }
       //      if (options.bufferSize) {
       //        obj.bufferSize = options.bufferSize;
@@ -106,9 +106,9 @@ try{
   const im = new mapnik.Image(256, 256);
   const buffer = await new Promise((res, rej) => {
     map.render(im, function(err, im) {
-      if(err) throw err;
+      if(err) return rej(err);
       im.encode('png', function(err,buffer) {
-        if (err) throw err;
+        if(err) return rej(err);
         res(buffer);
       });
     });
@@ -118,7 +118,7 @@ try{
   res.end(buffer);
 }catch(e){
   log.error("got error in handler:", e);
-  res.status(500).json({message:"something wrong:" + error});
+  res.status(500).json({message:"something wrong:" + e});
 }
 });
 
@@ -134,13 +134,13 @@ try{
   if(parseInt(z) <= 9){
     fields.push("zoom_to");
   }
-  const json = await new Promise((res, _rej) => {
+  const json = await new Promise((res, rej) => {
     map.render(
       grid, {
         layer:"l1", 
         fields,
       }, function(err, grid) {
-      if (err) throw err;
+      if (err) return rej(err);
       log.debug("grid:",grid);
       const json = grid.encodeSync({resolution: 4, features: true});
       res(json);
@@ -151,7 +151,7 @@ try{
   res.json(json);
 }catch(e){
   log.error("got error in handler:", e);
-  res.status(500).json({message:"something wrong:" + error});
+  res.status(500).json({message:"something wrong:" + e});
 }
 });
 
@@ -165,9 +165,9 @@ app.get("/new/:z/:x/:y.png", async (req, res) => {
     const im = new mapnik.Image(256, 256);
     const buffer = await new Promise((res, rej) => {
       map.render(im, function(err, im) {
-        if(err) throw err;
+        if(err) return rej(err);
         im.encode('png', function(err,buffer) {
-          if (err) throw err;
+          if(err) return rej(err);
           res(buffer);
         });
       });
@@ -177,7 +177,7 @@ app.get("/new/:z/:x/:y.png", async (req, res) => {
     res.end(buffer);
   }catch(e){
     log.error("got error in handler:", e);
-    res.status(500).json({message:"something wrong:" + error});
+    res.status(500).json({message:"something wrong:" + e});
   }
   });
   
@@ -193,13 +193,13 @@ app.get("/new/:z/:x/:y.png", async (req, res) => {
     if(parseInt(z) <= 9){
       fields.push("zoom_to");
     }
-    const json = await new Promise((res, _rej) => {
+    const json = await new Promise((res, rej) => {
       map.render(
         grid, {
           layer:"l1", 
           fields,
         }, function(err, grid) {
-        if (err) throw err;
+        if (err) return rej(err);
         log.debug("grid:",grid);
         const json = grid.encodeSync({resolution: 4, features: true});
         res(json);
@@ -210,7 +210,7 @@ app.get("/new/:z/:x/:y.png", async (req, res) => {
     res.json(json);
   }catch(e){
     log.error("got error in handler:", e);
-    res.status(500).json({message:"something wrong:" + error});
+    res.status(500).json({message:"something wrong:" + e});
   }
   });
 
