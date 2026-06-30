@@ -1,3 +1,10 @@
+## [4.36.2](https://github.com/Greenstand/node-mapnik-1/compare/v4.36.1...v4.36.2) (2026-06-30)
+
+
+### Bug Fixes
+
+* PGPool error handling and app.js catch/callback bugs ([82f54b9](https://github.com/Greenstand/node-mapnik-1/commit/82f54b9103928c1dbe01f3ac4dc9c39b2f595882))
+
 ## [4.36.1](https://github.com/Greenstand/node-mapnik-1/compare/v4.36.0...v4.36.1) (2023-11-27)
 
 
